@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { X, Send } from 'lucide-react';
 import './ChatPanel.css';
+import { api } from './api';
 
 const ChatPanel = ({ nodes, edges, onClose }: any) => {
   const [messages, setMessages] = useState<any[]>([]);
@@ -10,30 +11,16 @@ const ChatPanel = ({ nodes, edges, onClose }: any) => {
 
   useEffect(() => endRef.current?.scrollIntoView({ behavior: 'smooth' }), [messages, loading]);
 
+  // Inside ChatPanel.tsx
   const onSend = async () => {
     if (!input.trim() || loading) return;
-    const msg = input;
-    setInput('');
+    const msg = input; setInput('');
     setMessages(prev => [...prev, { role: 'user', content: msg }]);
     setLoading(true);
 
     try {
-      const res = await fetch('http://localhost:8000/run-workflow', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query: msg, workflow: { nodes, edges } })
-      });
-      const data = await res.json();
-
-      // Check if the answer contains the 429 error string
-      if (data.answer.includes("429") || data.answer.includes("Quota Exceeded")) {
-        setMessages(prev => [...prev, {
-          role: 'assistant',
-          content: "⚠️ Google API Rate Limit reached. Please wait 60 seconds and try again."
-        }]);
-      } else {
-        setMessages(prev => [...prev, { role: 'assistant', content: data.answer }]);
-      }
+      const data = await api.runWorkflow(msg, nodes, edges);
+      setMessages(prev => [...prev, { role: 'assistant', content: data.answer }]);
     } catch {
       setMessages(prev => [...prev, { role: 'assistant', content: "Error connecting to backend." }]);
     } finally {

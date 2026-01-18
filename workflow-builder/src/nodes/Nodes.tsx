@@ -3,6 +3,7 @@ import type { NodeProps } from 'reactflow';
 import { Sparkles, Database, Settings, Upload, Trash2, LogIn, LogOut } from 'lucide-react';
 import './Nodes.css';
 import React from 'react';
+import { api } from '../api';
 
 // --- Shared Header Component for Deletion ---
 const NodeHeader = ({ title, icon: Icon, id }: { title: string, icon: any, id: string }) => {
@@ -54,24 +55,20 @@ export const KnowledgeNode = ({ id, data }: NodeProps) => {
   const { setNodes } = useReactFlow();
   const [uploading, setUploading] = React.useState(false);
 
+  // Inside KnowledgeNode component in Nodes.tsx
   const onFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
     setUploading(true);
-    const fd = new FormData();
-    fd.append('file', file);
 
     try {
-      const res = await fetch('http://localhost:8000/upload', { method: 'POST', body: fd });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json.detail || "Upload failed");
-
+      const json = await api.uploadFile(file);
       setNodes(nds => nds.map(n => n.id === id ? {
         ...n,
         data: { ...n.data, filename: file.name, documentId: json.document_id }
       } : n));
     } catch (err: any) {
-      alert(err.message);
+      alert("Upload Error: " + err.message);
     } finally {
       setUploading(false);
     }
