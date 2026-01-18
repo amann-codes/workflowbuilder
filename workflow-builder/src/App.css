@@ -1,0 +1,102 @@
+.app-viewport {
+    width: 100vw;
+    height: 100vh;
+}
+
+.builder-viewport {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.m-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.m-card {
+    background: white;
+    width: 480px;
+    border-radius: 12px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.m-header {
+    padding: 16px 24px;
+    border-bottom: 1px solid #f1f5f9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.m-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.m-close {
+    color: #94a3b8;
+    cursor: pointer;
+}
+
+.m-body {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.m-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.m-field label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #475569;
+}
+
+.m-field input,
+.m-field textarea {
+    padding: 10px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    outline: none;
+    font-size: 14px;
+}
+
+.m-footer {
+    padding: 16px 24px;
+    border-top: 1px solid #f1f5f9;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.btn-sec {
+    background: none;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    color: #64748b;
+}
+
+.btn-pri {
+    background: #166534;
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+}

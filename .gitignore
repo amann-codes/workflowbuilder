@@ -1,0 +1,17 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+app/core/.env
+.env
+test.db
+chroma_db/
+temp/
+
+# Node
+node_modules/
+dist/
+.vercel
+
+# Misc
+.DS_Store
